@@ -52,7 +52,7 @@ Do not use the Service to break the law, to interfere with anyone else's use of 
 
 ## 9. Accounts and household access
 
-If you are the owner of a household in the app, you are responsible for who you grant access to and for what they do with it. See the [Privacy Policy](/abii-website/privacy) for what household members can see about each other.
+If you are the owner of a household in the app, you are responsible for who you grant access to and for what they do with it. See the [Privacy Policy](/privacy) for what household members can see about each other.
 
 ## 10. Termination
 

@@ -43,15 +43,34 @@ Until that variable is set the form renders **disabled** with a visible warning,
 
 ## Deploying to Cloudflare Pages
 
-Free tier, free custom domain, free SSL.
+Free tier, free SSL, and the source repo stays private. (GitHub Pages was
+ruled out: publishing from a private repo requires a paid GitHub plan.)
 
-1. Push this directory to a Git repo.
-2. Cloudflare dashboard → Workers & Pages → Create → Pages → connect the repo.
-3. Build command `npm run build`, output directory `dist`.
-4. Settings → Environment variables → add `PUBLIC_KIT_FORM_ID`.
-5. Custom domains → add the domain once it's registered.
+Source: `github.com/nickavion/abii-website` (private).
+
+1. Sign in at [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**.
+2. Authorize Cloudflare for the GitHub account and grant access to the `abii-website` repo.
+3. Name the project **`abii-website`**. This is what makes the deployed URL
+   `abii-website.pages.dev`, which must match `site.site` in `src/config.yaml`.
+   Pick a different name and update that value to match, or canonical URLs and
+   the sitemap will point at the wrong host.
+4. Build settings:
+   - Framework preset: **Astro**
+   - Build command: `npm run build`
+   - Build output directory: `dist`
+   - Production branch: `main`
+5. Environment variables → add `PUBLIC_KIT_FORM_ID` (see _Connecting the
+   waitlist_ above). Without it the form deploys visibly disabled.
+6. Save and Deploy. Every later push to `main` redeploys automatically.
+
+Node version comes from `.nvmrc` (22). If a build fails on an older Node,
+add a `NODE_VERSION=22` environment variable.
 
 `public/_headers` is already in Cloudflare's format and sets caching plus baseline security headers.
+
+**The deployed site is publicly reachable** even though the repo is private.
+That is true of every static host. Keep it in mind while the legal pages are
+still drafts — see the checklist below.
 
 ## Before this goes public
 
