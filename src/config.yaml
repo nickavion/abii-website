@@ -1,10 +1,9 @@
 site:
   name: Abii
-  # Cloudflare Pages default subdomain. Must match the Pages project name.
-  # When a real domain is registered (OPEN-11), set `site` to it and
-  # resubmit the sitemap.
-  site: 'https://abii-website.pages.dev'
-  base: '/'
+  # GitHub Pages project site. When a real domain is registered (OPEN-11),
+  # set `site` to it and `base` back to '/', then resubmit the sitemap.
+  site: 'https://nickavion.github.io'
+  base: '/abii-website'
   trailingSlash: false
 
   googleSiteVerificationId: false
