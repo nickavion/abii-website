@@ -41,17 +41,33 @@ The form posts to a Kit (formerly ConvertKit) custom form endpoint. Kit's free t
 
 Until that variable is set the form renders **disabled** with a visible warning, deliberately — a form that accepts addresses and drops them is worse than one that says it isn't ready.
 
-## Deploying to Cloudflare Pages
+## Deploying
 
-Free tier, free custom domain, free SSL.
+Live at **https://nickavion.github.io/abii-website** via GitHub Pages.
 
-1. Push this directory to a Git repo.
-2. Cloudflare dashboard → Workers & Pages → Create → Pages → connect the repo.
-3. Build command `npm run build`, output directory `dist`.
-4. Settings → Environment variables → add `PUBLIC_KIT_FORM_ID`.
-5. Custom domains → add the domain once it's registered.
+`.github/workflows/deploy.yml` builds and publishes on every push to `main`.
+Nothing to run by hand; check the Actions tab for build status, or re-run a
+deploy from there with **Run workflow**.
 
-`public/_headers` is already in Cloudflare's format and sets caching plus baseline security headers.
+The repo is **public**, which is what GitHub Pages requires on the Free plan.
+Anything committed here is world-readable, including the legal drafts and the
+open items in the checklist below.
+
+Because Pages serves this as a project site rather than at a domain root, the
+site lives under the `/abii-website` subpath. That is why `src/config.yaml`
+sets `base: '/abii-website'`, and why the nav anchors in `src/navigation.ts`
+are built off `getHomePermalink()` instead of a bare `/#id`, which would
+resolve to `nickavion.github.io` rather than to the site. **On moving to a real
+domain (OPEN-11): set `site` to it, set `base` back to `'/'`, and drop the
+`/abii-website` prefix from the Privacy Policy link in `src/pages/terms.md`.**
+
+To wire up the waitlist, add `PUBLIC_KIT_FORM_ID` under Settings → Secrets and
+variables → Actions → **Variables**. The workflow passes it into the build.
+Until then the form deploys visibly disabled.
+
+`public/_headers` is written in Cloudflare's format and is ignored by GitHub
+Pages, which does not support custom headers. It is kept for a future move to
+a host that does.
 
 ## Before this goes public
 
