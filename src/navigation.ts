@@ -1,5 +1,11 @@
 import type { CallToAction } from './types';
-import { getPermalink } from './utils/permalinks';
+import { getHomePermalink, getPermalink } from './utils/permalinks';
+
+// Homepage section anchors. Built off getHomePermalink() so they carry the
+// configured base path: on GitHub Pages the site is served from a subpath, and
+// a bare '/#faq' would point at the domain root instead. They must stay
+// absolute (not '#faq') so they also work from /privacy, /terms, etc.
+const anchor = (id: string) => `${getHomePermalink()}#${id}`;
 
 /**
  * §2 of the copy spec asks for three links plus one button. "Pricing" is
@@ -10,12 +16,12 @@ import { getPermalink } from './utils/permalinks';
  */
 export const headerData = {
   links: [
-    { text: 'How it works', href: '/#how-it-works' },
-    { text: 'Features', href: '/#features' },
-    { text: 'Roadmap', href: '/#roadmap' },
-    { text: 'FAQ', href: '/#faq' },
+    { text: 'How it works', href: anchor('how-it-works') },
+    { text: 'Features', href: anchor('features') },
+    { text: 'Roadmap', href: anchor('roadmap') },
+    { text: 'FAQ', href: anchor('faq') },
   ],
-  actions: [{ text: 'Join the beta', href: '/#signup', variant: 'primary' }] satisfies CallToAction[],
+  actions: [{ text: 'Join the beta', href: anchor('signup'), variant: 'primary' }] satisfies CallToAction[],
 };
 
 export const footerData = {
@@ -23,15 +29,15 @@ export const footerData = {
     {
       title: 'Product',
       links: [
-        { text: 'How it works', href: '/#how-it-works' },
-        { text: 'Features', href: '/#features' },
-        { text: 'Roadmap', href: '/#roadmap' },
-        { text: 'FAQ', href: '/#faq' },
+        { text: 'How it works', href: anchor('how-it-works') },
+        { text: 'Features', href: anchor('features') },
+        { text: 'Roadmap', href: anchor('roadmap') },
+        { text: 'FAQ', href: anchor('faq') },
       ],
     },
     {
       title: 'Company',
-      links: [{ text: 'Join the beta', href: '/#signup' }],
+      links: [{ text: 'Join the beta', href: anchor('signup') }],
     },
     {
       title: 'Legal',

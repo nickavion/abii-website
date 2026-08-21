@@ -1,9 +1,9 @@
 site:
   name: Abii
-  # TODO (OPEN-11): replace with the real domain once registered, then update
-  # `metadata.openGraph.url` consumers and resubmit the sitemap.
-  site: 'https://abii.example.com'
-  base: '/'
+  # GitHub Pages project site. When a real domain is registered (OPEN-11),
+  # set `site` to it and `base` back to '/', then resubmit the sitemap.
+  site: 'https://nickavion.github.io'
+  base: '/abii-website'
   trailingSlash: false
 
   googleSiteVerificationId: false
