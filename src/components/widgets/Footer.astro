@@ -1,0 +1,135 @@
+---
+import { Icon } from 'astro-icon/components';
+import Logo from '~/components/Logo.astro';
+import Tbd from '~/components/common/Tbd.astro';
+import { BRAND, contactEmail } from '~/brand';
+import { getHomePermalink } from '~/utils/permalinks';
+
+interface Link {
+  text?: string;
+  href?: string;
+  ariaLabel?: string;
+  icon?: string;
+}
+
+interface Links {
+  title?: string;
+  links: Array<Link>;
+}
+
+export interface Props {
+  links?: Array<Links>;
+}
+
+const { links = [] } = Astro.props;
+
+const hello = contactEmail('hello');
+const press = contactEmail('press');
+---
+
+<footer class="relative border-t border-gray-200 not-prose dark:border-white/10">
+  <div class="dark:bg-dark absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 dark:text-slate-300">
+    <div class="grid grid-cols-12 gap-4 gap-y-8 py-8 sm:gap-8 md:py-12">
+      <div class="col-span-12 lg:col-span-4">
+        <a class="inline-block" href={getHomePermalink()} aria-label="Abii home">
+          <Logo />
+        </a>
+        <p class="mt-3 text-sm italic text-muted">Air Balancing Intelligent Interface</p>
+        <p class="mt-1 text-sm text-muted">Room-by-room comfort, without the contractor.</p>
+      </div>
+
+      {
+        links.map(({ title, links: items }) => (
+          <div class="col-span-6 md:col-span-3 lg:col-span-2">
+            <div class="mb-2 font-medium dark:text-gray-300">{title}</div>
+            {items?.length > 0 && (
+              <ul class="text-sm">
+                {items.map(({ text, href, ariaLabel }) => (
+                  <li class="mb-2">
+                    <a
+                      class="text-muted transition duration-150 ease-in-out hover:text-gray-700 hover:underline dark:text-gray-400"
+                      href={href}
+                      aria-label={ariaLabel}
+                    >
+                      <Fragment set:html={text} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
+
+      <div class="col-span-6 md:col-span-3 lg:col-span-2">
+        <div class="mb-2 font-medium dark:text-gray-300">Contact</div>
+        <ul class="text-sm">
+          <li class="mb-2">
+            {
+              hello ? (
+                <a
+                  class="text-muted transition duration-150 ease-in-out hover:text-gray-700 hover:underline dark:text-gray-400"
+                  href={`mailto:${hello}`}
+                >
+                  {hello}
+                </a>
+              ) : (
+                <span class="text-muted">
+                  hello@
+                  <Tbd label="domain" open="OPEN-11" />
+                </span>
+              )
+            }
+          </li>
+          <li class="mb-2">
+            {
+              press ? (
+                <a
+                  class="text-muted transition duration-150 ease-in-out hover:text-gray-700 hover:underline dark:text-gray-400"
+                  href={`mailto:${press}`}
+                >
+                  {press}
+                </a>
+              ) : (
+                <span class="text-muted">
+                  press@
+                  <Tbd label="domain" open="OPEN-11" />
+                </span>
+              )
+            }
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="items-center justify-between border-t border-gray-200 py-6 md:flex md:py-8 dark:border-white/10">
+      {
+        BRAND.socialLinks.length > 0 && (
+          <ul class="-ml-2 mb-4 flex md:order-1 md:mb-0 md:ml-4">
+            {BRAND.socialLinks.map(({ ariaLabel, href, icon }) => (
+              <li>
+                <a
+                  class="inline-flex items-center rounded-lg p-2.5 text-sm text-muted hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+                  aria-label={ariaLabel}
+                  href={href}
+                >
+                  <Icon name={icon} class="h-5 w-5" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      <div class="space-y-1 text-sm dark:text-muted">
+        <p>
+          © 2026 {BRAND.legalEntity ?? <Tbd label="legal entity" open="OPEN-11" />}. All rights reserved.
+        </p>
+        <p class="text-muted">
+          {BRAND.mailingAddress ?? <Tbd label="mailing address" open="OPEN-11" />}
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

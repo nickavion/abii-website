@@ -1,0 +1,29 @@
+---
+import markMask from '~/assets/images/abii-mark-mask.png';
+
+export interface Props {
+  /** Height of the mark in rem-ish Tailwind sizing. */
+  class?: string;
+  /** Hide the wordmark and show the mark alone. */
+  markOnly?: boolean;
+}
+
+const { class: className = '', markOnly = false } = Astro.props;
+---
+
+<span class:list={['inline-flex items-center gap-2.5 select-none', className]}>
+  <span
+    class="logo-mark h-8 w-8 shrink-0 text-primary"
+    style={`--logo-mark-src: url(${markMask.src})`}
+    role="img"
+    aria-label="Abii"
+  >
+  </span>
+  {
+    !markOnly && (
+      <span class="font-heading text-2xl font-light tracking-[0.18em] text-gray-900 dark:text-white" aria-hidden="true">
+        Abii
+      </span>
+    )
+  }
+</span>

@@ -1,0 +1,70 @@
+---
+// Abii brand tokens.
+//
+// Palette (from the brand sheet in the Abii asset folder):
+//   Growth Green  #29B675  main
+//   Energy Gold   #FBC02D  accent
+//   Moss Deep     #14532D  dark
+//
+// Typeface: Open Sans, provided by Astro's native Fonts API (see `fonts` in
+// astro.config.ts and <Font /> in Layout.astro) as `--font-open-sans`.
+---
+
+<style is:inline>
+  :root {
+    --aw-font-sans: var(--font-open-sans);
+    --aw-font-serif: var(--font-open-sans);
+    --aw-font-heading: var(--font-open-sans);
+
+    /* Growth Green is the action colour; Moss Deep is the hover/secondary. */
+    --aw-color-primary: rgb(23 128 79);
+    --aw-color-secondary: rgb(20 83 45);
+    --aw-color-accent: rgb(251 192 45);
+
+    /* Brand constants, referenced directly where a literal hue is needed. */
+    --abii-growth-green: rgb(41 182 117);
+    --abii-energy-gold: rgb(251 192 45);
+    --abii-moss-deep: rgb(20 83 45);
+    /* Label colour for filled buttons — white on light, near-black on dark,
+       because the lifted dark-mode green is far too bright to carry white. */
+    --abii-on-primary: rgb(255 255 255);
+
+    --aw-color-text-heading: rgb(12 32 21);
+    --aw-color-text-default: rgb(28 43 35);
+    --aw-color-text-muted: rgb(28 43 35 / 72%);
+
+    /* Warm off-white, matching the ground the logo lockup was designed on. */
+    --aw-color-bg-page: rgb(252 252 249);
+    --aw-color-bg-subtle: rgb(244 246 242);
+
+    --aw-color-bg-page-dark: rgb(9 20 14);
+
+    ::selection {
+      background-color: rgb(41 182 117 / 25%);
+    }
+  }
+
+  .dark {
+    --aw-font-sans: var(--font-open-sans);
+    --aw-font-serif: var(--font-open-sans);
+    --aw-font-heading: var(--font-open-sans);
+
+    /* Lifted on dark ground so the green keeps AA contrast on near-black. */
+    --aw-color-primary: rgb(52 199 129);
+    --aw-color-secondary: rgb(141 214 153);
+    --aw-color-accent: rgb(251 192 45);
+    --abii-on-primary: rgb(6 26 16);
+
+    --aw-color-text-heading: rgb(240 247 242);
+    --aw-color-text-default: rgb(223 234 227);
+    --aw-color-text-muted: rgb(223 234 227 / 70%);
+
+    --aw-color-bg-page: rgb(9 20 14);
+    --aw-color-bg-subtle: rgb(15 31 22);
+
+    ::selection {
+      background-color: rgb(41 182 117 / 35%);
+      color: snow;
+    }
+  }
+</style>

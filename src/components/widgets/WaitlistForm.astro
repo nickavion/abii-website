@@ -1,0 +1,169 @@
+---
+import { Icon } from 'astro-icon/components';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import { BRAND } from '~/brand';
+
+/**
+ * §9b — waitlist. Posts to a Kit (formerly ConvertKit) custom form endpoint.
+ *
+ * Set PUBLIC_KIT_FORM_ID in `.env` to the numeric id from the form's embed
+ * code (Kit → Grow → Landing Pages & Forms → your form → Embed → HTML; the id
+ * is the number in `https://app.kit.com/forms/<ID>/subscriptions`).
+ *
+ * The form degrades without JavaScript: `action`/`method` are real, so a
+ * no-JS submit posts to Kit and lands on Kit's own confirmation page. With JS
+ * the response is handled inline and the visitor never leaves the page.
+ *
+ * Kit is what makes the "unsubscribe in one click" promise in this section
+ * true — it appends the unsubscribe link and stores the mailing address that
+ * CAN-SPAM requires on every send.
+ */
+const formId = import.meta.env.PUBLIC_KIT_FORM_ID;
+const endpoint = formId ? `https://app.kit.com/forms/${formId}/subscriptions` : undefined;
+---
+
+<WidgetWrapper id="signup" containerClass="max-w-3xl mx-auto">
+  <div class="rounded-2xl border border-primary/20 bg-subtle p-6 shadow-lg sm:p-10 dark:border-primary/25">
+    <h2 class="font-heading text-3xl font-bold tracking-tight md:text-4xl">Get on the list</h2>
+    <p class="mt-4 text-lg text-muted">
+      Abii is in beta in a small number of homes. We're adding more this {BRAND.shipWindow.split(' ')[0].toLowerCase()}.
+      Leave your email and we'll tell you when there's a unit for you, and what it costs before we ask you for anything.
+    </p>
+
+    {
+      !endpoint && (
+        <p class="mt-6 flex items-start gap-2 rounded-lg border border-dashed border-amber-500/60 bg-amber-400/10 p-4 text-sm text-amber-800 dark:text-amber-200">
+          <Icon name="tabler:alert-triangle" class="mt-0.5 h-5 w-5 shrink-0" />
+          <span>
+            <strong>Not connected yet.</strong> Set <code>PUBLIC_KIT_FORM_ID</code> in <code>.env</code> before this
+            page goes live. Until then the form is disabled so no signup is silently dropped.
+          </span>
+        </p>
+      )
+    }
+
+    <form id="waitlist-form" class="mt-8" action={endpoint} method="post" data-endpoint={endpoint} novalidate>
+      <div class="sm:flex sm:gap-3">
+        <div class="flex-1">
+          <label for="email_address" class="sr-only">Email address</label>
+          <input
+            type="email"
+            id="email_address"
+            name="email_address"
+            required
+            autocomplete="email"
+            placeholder="Email address"
+            disabled={!endpoint}
+            class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-3.5 text-md disabled:cursor-not-allowed disabled:opacity-60 dark:border-gray-700 dark:bg-slate-900"
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={!endpoint}
+          class="btn-primary mt-3 w-full sm:mt-0 sm:w-auto disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          Join the beta
+        </button>
+      </div>
+
+      <fieldset class="mt-8">
+        <legend class="text-sm font-medium">
+          How many rooms in your house are the wrong temperature?
+          <span class="font-normal text-muted">(optional)</span>
+        </legend>
+        <div class="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+          {
+            ['1', '2–3', '4+'].map((value) => (
+              <label class="flex cursor-pointer items-center gap-2 text-sm">
+                <input
+                  type="radio"
+                  name="fields[wrong_rooms]"
+                  value={value}
+                  disabled={!endpoint}
+                  class="h-4 w-4 accent-[var(--abii-growth-green)]"
+                />
+                {value}
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+
+      {/* Bot trap — a real person never fills this in. */}
+      <div class="absolute h-0 w-0 overflow-hidden" aria-hidden="true">
+        <label>
+          Leave this field empty
+          <input type="text" name="website_url" tabindex="-1" autocomplete="off" />
+        </label>
+      </div>
+
+      <p class="mt-6 text-sm text-muted">No spam, no card, no commitment. Unsubscribe in one click.</p>
+
+      <p id="waitlist-status" class="mt-4 hidden text-sm font-medium" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</WidgetWrapper>
+
+<script>
+  const setup = () => {
+    const form = document.getElementById('waitlist-form') as HTMLFormElement | null;
+    const status = document.getElementById('waitlist-status');
+    if (!form || !status || form.dataset.bound === 'true') return;
+
+    const endpoint = form.dataset.endpoint;
+    if (!endpoint) return;
+    form.dataset.bound = 'true';
+
+    const say = (message: string, tone: 'ok' | 'error') => {
+      status.textContent = message;
+      status.classList.remove('hidden', 'text-primary', 'text-red-600', 'dark:text-red-400');
+      status.classList.add(tone === 'ok' ? 'text-primary' : 'text-red-600');
+      if (tone === 'error') status.classList.add('dark:text-red-400');
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const email = form.querySelector<HTMLInputElement>('#email_address');
+      if (!email?.value || !email.checkValidity()) {
+        say('Please enter a valid email address.', 'error');
+        email?.focus();
+        return;
+      }
+      // Honeypot tripped — pretend it worked, drop the submission.
+      if (form.querySelector<HTMLInputElement>('[name="website_url"]')?.value) {
+        say("You're on the list. We'll be in touch.", 'ok');
+        return;
+      }
+
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const label = button?.textContent;
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Joining…';
+      }
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (!response.ok) throw new Error(`Kit responded ${response.status}`);
+
+        form.reset();
+        say("You're on the list. Check your inbox to confirm, that's the last step.", 'ok');
+      } catch {
+        say('Something went wrong on our end. Please try again in a moment.', 'error');
+      } finally {
+        if (button) {
+          button.disabled = false;
+          if (label) button.textContent = label;
+        }
+      }
+    });
+  };
+
+  setup();
+  document.addEventListener('astro:page-load', setup);
+</script>

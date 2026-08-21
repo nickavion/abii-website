@@ -1,0 +1,72 @@
+site:
+  name: Abii
+  # TODO (OPEN-11): replace with the real domain once registered, then update
+  # `metadata.openGraph.url` consumers and resubmit the sitemap.
+  site: 'https://abii.example.com'
+  base: '/'
+  trailingSlash: false
+
+  googleSiteVerificationId: false
+
+# Default SEO metadata. Strings come from §1 of the Abii copy spec.
+metadata:
+  title:
+    default: 'Abii: Smart Vents for Room-by-Room Temperature Control'
+    template: '%s | Abii'
+  description: 'Abii smart vents give every room its own desired temperature. Fix the freezing bedroom and stop paying to heat empty space. No ductwork, no contractor.'
+  robots:
+    index: true
+    follow: true
+  openGraph:
+    site_name: Abii
+    images:
+      - url: '~/assets/images/abii-social-card.png'
+        width: 1200
+        height: 630
+    type: website
+  twitter:
+    cardType: summary_large_image
+
+i18n:
+  language: en
+  textDirection: ltr
+
+apps:
+  blog:
+    isEnabled: false
+    postsPerPage: 6
+
+    post:
+      isEnabled: false
+      permalink: '/%slug%'
+      robots:
+        index: false
+
+    list:
+      isEnabled: false
+      pathname: 'blog'
+      robots:
+        index: false
+
+    category:
+      isEnabled: false
+      pathname: 'category'
+      robots:
+        index: false
+
+    tag:
+      isEnabled: false
+      pathname: 'tag'
+      robots:
+        index: false
+
+    isRelatedPostsEnabled: false
+    relatedPostsCount: 4
+
+analytics:
+  vendors:
+    googleAnalytics:
+      id: null # Adding analytics triggers the cookie notice requirement in §13a.
+
+ui:
+  theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"

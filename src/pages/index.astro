@@ -1,0 +1,416 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import Content from '~/components/widgets/Content.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import AssetPlaceholder from '~/components/common/AssetPlaceholder.astro';
+import WaitlistForm from '~/components/widgets/WaitlistForm.astro';
+import Image from '~/components/common/Image.astro';
+import { Icon } from 'astro-icon/components';
+
+import appTwoRooms from '~/assets/images/mockups/app-two-rooms.png';
+import roomCardVacant from '~/assets/images/mockups/room-card-vacant.png';
+import twoPhones from '~/assets/images/mockups/two-phones-parent-kid.png';
+import appFullHome from '~/assets/images/mockups/app-full-home.png';
+import handsVentSwap from '~/assets/images/mockups/hands-vent-swap.png';
+import step1 from '~/assets/images/mockups/step-1-vent-drop.png';
+import step2 from '~/assets/images/mockups/step-2-phone-pair.png';
+import step3 from '~/assets/images/mockups/step-3-thermostat-check.png';
+
+import { BRAND } from '~/brand';
+
+const metadata = {
+  title: 'Abii: Smart Vents for Room-by-Room Temperature Control',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- §3 Hero ================================================================ -->
+
+  <Hero id="hero" actions={[{ variant: 'primary', text: 'Join the beta', href: '#signup' }]}>
+    <Fragment slot="title">
+      Every room gets its <span class="text-primary">own temperature</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Abii replaces your vent covers with smart ones. Our patent pending algorithm helps regulate your home in combination with our vents to give you your desired
+      temperature. No more sweaty bedroom nights. No more freezing rooms. No more paying to condition rooms nobody's in.
+      No expensive ductwork or extra HVAC unit. No new HVAC system. No contractors.
+    </Fragment>
+
+    <Fragment slot="content">
+      <p class="mt-6 text-sm text-muted">
+        Free to join · Limited beta units {BRAND.shipWindow} · No card required
+      </p>
+    </Fragment>
+
+    <Fragment slot="image">
+      <AssetPlaceholder
+        no={3}
+        size="2000px+ wide"
+        ratio="16/9"
+        icon="tabler:player-play"
+        brief="Hero video, two cuts. Cut 1: the Abii vent in use, louvers closing, no more air coming through. Cut 2: a person in the living room in direct sun, uncomfortably hot. She opens the app and presses the down button; the button turns progressively more blue with each press. The window shades crack closed to about 60%, cutting the light. We float up to the vent and see it blowing downward toward her, with blue waves showing the cold air coming from the vent."
+        note="An Abii smart vent register installed in a hardwood floor, with the Abii phone app beside it showing per-room temperatures."
+      />
+    </Fragment>
+  </Hero>
+
+  <!-- §4 Trust strip ========================================================= -->
+
+  <section class="border-y border-primary/15 bg-subtle not-prose">
+    <div class="mx-auto max-w-6xl px-4 py-5 sm:px-6">
+      <ul class="flex flex-col items-center justify-center gap-3 text-center text-sm font-medium sm:flex-row sm:gap-8">
+        {
+          [
+            'Built and tested in real homes',
+            'Fits standard residential vent openings',
+            'Works with the HVAC system you already have',
+          ].map((claim) => (
+            <li class="flex items-center gap-2">
+              <Icon name="tabler:circle-check" class="h-5 w-5 shrink-0 text-primary" />
+              {claim}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- §5 Problem ============================================================= -->
+
+  <WidgetWrapper id="problem" containerClass="max-w-4xl mx-auto">
+    <Headline
+      title="One thermostat ≠ efficiency"
+      classes={{ container: 'text-center', title: 'text-3xl md:text-4xl font-bold tracking-tight' }}
+    />
+    <p class="text-lg text-muted">
+      Your thermostat measures the temperature in exactly one spot, usually a hallway, and then heats or cools your
+      entire house based on that one reading. So the upstairs bedroom sits at 78 while the living room is at 66, and you
+      fix it the only way the system allows: crank the whole house and open a window. Meanwhile the furnace is pushing
+      conditioned air into the guest room, the office, and the basement, rooms nobody has walked into all day.
+    </p>
+
+    <figure class="mt-10 rounded-xl border-l-4 border-accent bg-subtle p-6 sm:p-8">
+      <p class="font-heading text-2xl font-bold leading-snug md:text-3xl">
+        More than half of a US household's annual energy use, <span class="text-primary">52%</span>, goes to space
+        heating and air conditioning alone.
+      </p>
+      <figcaption class="mt-3 text-sm text-muted">
+        <a
+          class="underline hover:text-primary"
+          href="https://www.eia.gov/energyexplained/use-of-energy/homes.php"
+          target="_blank"
+          rel="noopener noreferrer">U.S. Energy Information Administration</a
+        >
+      </figcaption>
+    </figure>
+  </WidgetWrapper>
+
+  <!-- §6 How it works ======================================================== -->
+
+  <Steps
+    id="how-it-works"
+    title="Three steps. An hour or less."
+    isReversed
+    items={[
+      {
+        title: 'Swap your vent covers',
+        description:
+          'Pop out the old register, drop in an Abii vent. Standard residential sizes, no drilling, no wiring, no ductwork touched. If you can change an air filter, you can do this.',
+        icon: 'tabler:arrow-big-down-lines',
+      },
+      {
+        title: 'Pair each vent to a room',
+        description:
+          'Open the app, scan, and assign each vent and temp sensor to the room it lives in. Place the temp sensor in a convenient location.',
+        icon: 'tabler:device-mobile-message',
+      },
+      {
+        title: 'Set a target and walk away',
+        description:
+          'Tell Abii what you want each room to be. It opens and closes each vent on its own, all day, using the HVAC system you already own.',
+        icon: 'tabler:temperature',
+      },
+    ]}
+  >
+    <Fragment slot="image">
+      <div class="grid grid-cols-3 gap-4">
+        <Image src={step1} alt="Vent register icon with a downward-drop arrow" width={200} height={200} />
+        <Image src={step2} alt="Phone icon with a signal arc reaching a vent" width={200} height={200} />
+        <Image src={step3} alt="Thermostat dial icon with a checkmark" width={200} height={200} />
+      </div>
+    </Fragment>
+  </Steps>
+
+  <!-- Eco Mode =============================================================== -->
+
+  <WidgetWrapper id="eco-mode" containerClass="max-w-4xl mx-auto text-center">
+    <p class="text-sm font-bold uppercase tracking-widest text-primary">Eco Mode</p>
+    <h2 class="mt-2 font-heading text-3xl font-bold tracking-tight md:text-4xl">Abii learns your habits</h2>
+    <p class="mt-4 text-lg text-muted">
+      Our patent-pending algorithm helps determine the best way to save energy without sacrificing comfort. Abii learns
+      your habits and reduces the waste of heating and cooling unused rooms, heating and cooling rooms while you're
+      away, and heating and cooling rooms while you're asleep. Wake up and fall asleep to your ideal temperature and get
+      a good night's sleep.
+    </p>
+  </WidgetWrapper>
+
+  <!-- §7 Features ============================================================ -->
+
+  <WidgetWrapper id="features" containerClass="max-w-5xl mx-auto pb-0 md:pb-0 lg:pb-0">
+    <Headline
+      title="What that actually gets you"
+      classes={{ container: 'text-center', title: 'text-3xl md:text-4xl font-bold tracking-tight' }}
+    />
+  </WidgetWrapper>
+
+  <Content
+    isAfterContent
+    title="The cold room gets fixed"
+    content="Set the bedroom to 70 and the living room to 66, and Abii actually delivers both. Each vent opens and closes on its own based on that room's real temperature, not on whatever the hallway thermostat happens to be reading."
+  >
+    <Fragment slot="image">
+      <Image
+        src={appTwoRooms}
+        alt="App home screen showing two rooms at different temperatures, both sitting at target"
+        width={1200}
+        height={900}
+        class="rounded-lg border border-primary/15"
+      />
+    </Fragment>
+  </Content>
+
+  <Content
+    isAfterContent
+    isReversed
+    title="No more wasted energy"
+    content="Abii sees when a room's been vacant and drops that vent down to a trickle instead of blasting it. The guest room stays livable; it just stops being a priority."
+  >
+    <Fragment slot="image">
+      <Image
+        src={roomCardVacant}
+        alt="Room card with a gray vacant dot and the vent icon in the closed state"
+        width={1200}
+        height={900}
+        class="rounded-lg border border-primary/15"
+      />
+    </Fragment>
+  </Content>
+
+  <Content
+    isAfterContent
+    title="Everyone in the house gets a say, but you keep the keys"
+    content="Give your kid control of their own bedroom and view-only on the rest of the house. They adjust their room from their phone; you can see every change and override anything, instantly. No more thermostat arguments in the hallway."
+  >
+    <Fragment slot="image">
+      <Image
+        src={twoPhones}
+        alt="Two phones side by side, parent full view and kid single-room view"
+        width={1200}
+        height={900}
+        class="rounded-lg border border-primary/15"
+      />
+    </Fragment>
+  </Content>
+
+  <Content
+    isAfterContent
+    isReversed
+    title="It fits the house you already have"
+    content="Abii works with your existing central HVAC: furnace, heat pump, AC, whatever's down there. No new equipment, no dampers cut into the ductwork, no permit, no $3,000+ zoning retrofit quote."
+  >
+    <Fragment slot="image">
+      <AssetPlaceholder
+        no={7}
+        size="~1200px"
+        ratio="4/3"
+        icon="tabler:camera"
+        brief="An Abii vent installed in a real room. Photo, not render."
+      />
+    </Fragment>
+  </Content>
+
+  <Content
+    isAfterContent
+    title="You can see what's happening"
+    content="Live temperature, humidity, CO2 sensors and occupancy for every room, in one screen. Take control of your home and save on heating and cooling."
+  >
+    <Fragment slot="image">
+      <Image
+        src={appFullHome}
+        alt="Full app home screen, room list plus the external conditions card"
+        width={1200}
+        height={900}
+        class="rounded-lg border border-primary/15"
+      />
+    </Fragment>
+  </Content>
+
+  <Content
+    isAfterContent
+    isReversed
+    title="Renter-friendly"
+    content="The whole install is a vent cover swap. Take them out when you move, put the old ones back, and take Abii to the next place. No landlord conversation required."
+  >
+    <Fragment slot="image">
+      <Image
+        src={handsVentSwap}
+        alt="Illustration of a vent cover being swapped for an Abii vent"
+        width={1200}
+        height={900}
+        class="rounded-lg border border-primary/15"
+      />
+    </Fragment>
+  </Content>
+
+  <!-- §7b Roadmap ============================================================ -->
+
+  <section id="roadmap" class="bg-subtle not-prose scroll-mt-[72px]">
+    <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 md:py-16">
+      <h2 class="font-heading text-2xl font-bold tracking-tight">Where Abii is headed</h2>
+      <ul class="mt-6 grid gap-5 sm:grid-cols-2">
+        {
+          [
+            [
+              'Sustainable heating and cooling.',
+              'Our next big project is finding natural ways to heat and cool your home instead of always relying on your HVAC, which helps give your HVAC system a longer life.',
+            ],
+            [
+              'Program it or learn.',
+              'The choice is yours. You can let it learn your habits, or program them in to have your home exactly how you want it.',
+            ],
+            [
+              'Voice and dashboards.',
+              'Alexa, Google Home, HomeKit, plus an energy-savings dashboard showing runtime, estimated savings, and rooms that are having issues.',
+            ],
+            [
+              'Home automation.',
+              'We want to help make the home fully automated, so you can focus on the more important things in life.',
+            ],
+          ].map(([label, body]) => (
+            <li class="flex gap-3 text-sm leading-relaxed">
+              <Icon name="tabler:point-filled" class="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              <span>
+                <strong class="font-semibold">{label}</strong> <span class="text-muted">{body}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-6 text-sm italic text-muted">In beta testing.</p>
+    </div>
+  </section>
+
+  <!-- §8a Founder note ======================================================= -->
+
+  <Content id="founder" isReversed title="Why I'm building this">
+    <Fragment slot="content">
+      <p class="mb-4">
+        I got tired of the same argument every winter. One room in the apartment was always freezing, and the only fix
+        the thermostat offered was to heat the entire place until that one room caught up, which made every other room
+        uncomfortable and the bill worse.
+      </p>
+      <p class="mb-4">
+        The industry's answer to this is zoned HVAC: dampers cut into your ductwork, a contractor, a few thousand
+        dollars, and a system you can't take with you. That's not an answer for most people. It's certainly not an
+        answer if you rent.
+      </p>
+      <p class="mb-4">
+        So I started building the version that should exist: a vent register that swaps in like a normal vent cover, has
+        a sensor and a motor inside it, and decides for itself when to open. I got the first one working on a bench, an
+        ESP32, a temperature sensor, and a motor. Then the app to run them. Then the logic that decides which rooms get
+        air.
+      </p>
+      <p class="mb-4">
+        It's not finished. It's in a small number of real homes right now and I'd rather have a handful of people using
+        it and telling me what's broken than a hundred thousand people on a waitlist for something perfect. If your
+        house has a room that's always wrong, I'd like you to be one of them.
+      </p>
+      <p class="font-semibold">{BRAND.founderName}, founder, Abii</p>
+    </Fragment>
+
+    <Fragment slot="image">
+      <AssetPlaceholder
+        no={11}
+        size="400×400"
+        ratio="1/1"
+        icon="tabler:user-circle"
+        brief="Founder headshot, plain background."
+        class="mx-auto max-w-xs"
+      />
+    </Fragment>
+  </Content>
+
+  <!-- §9b Waitlist =========================================================== -->
+
+  <div id="pricing" class="scroll-mt-[72px]"></div>
+  <WaitlistForm />
+
+  <!-- §10 FAQ ================================================================ -->
+
+  <FAQs
+    id="faq"
+    title="Questions worth asking"
+    columns={1}
+    classes={{ container: 'max-w-4xl' }}
+    items={[
+      {
+        title: 'Does closing vents damage my HVAC system?',
+        description: `It's the right question to ask, and it's why the control logic works the way it does. Closing too many vents at once raises static pressure in your ductwork, which strains the blower, a real, well-documented problem with manually shutting registers. Abii is built around that constraint rather than ignoring it: the system measures conditions at each vent, never fully closes a room's vent just because nobody's in it (unoccupied rooms drop to a trickle rather than shutting off), and caps how much of your total airflow can be restricted at any one time. If your ducts or blower are already marginal, tell us during beta setup and we'll walk through it with you.`,
+        icon: 'tabler:wind',
+      },
+      {
+        title: 'How much will it cost?',
+        description: `We haven't set final pricing. We're targeting a per-vent price that makes sense for fixing one room at a time rather than committing to the whole house, and beta members will know the number before anyone else and before we ask them for anything. The app is free and there's no subscription.`,
+        icon: 'tabler:tag',
+      },
+      {
+        title: 'How is this different from a Nest or an Ecobee?',
+        description: `A smart thermostat is smart about <em>when</em> to run your HVAC. Abii is smart about <em>where</em> the air goes. Your Nest still treats your whole house as one zone, it just does it on a nicer schedule. Abii gives every room its own target and its own vent. They're complementary, not competing; keep the thermostat you have.`,
+        icon: 'tabler:device-desktop-analytics',
+      },
+      {
+        title: 'Do I need an electrician, or to touch my ductwork?',
+        description: `No and no. You take out your existing vent cover and drop Abii in its place. Nothing gets cut, drilled, wired, or permitted. Traditional zoned HVAC, dampers installed inside your ducts by a contractor, is the alternative, and it typically runs into the thousands.`,
+        icon: 'tabler:plug-off',
+      },
+      {
+        title: 'Is there an iPhone app?',
+        description: `Not yet, Android first, iOS after. The honest reason: Abii vents talk to your phone directly over Bluetooth, and getting that link rock-solid is meaningfully harder on iOS. We'd rather it work perfectly on one platform than half-work on two. iOS is next up after the Android hardware release is stable. If you're on iPhone, join the list anyway, you'll be first in line and you'll be the reason it gets prioritized.`,
+        icon: 'tabler:brand-apple',
+      },
+      {
+        title: 'How much will it save me on my bill?',
+        description: `We don't have a number we're willing to put in writing yet, and we'd rather tell you that than make one up. Heating and cooling is over half of the average American household's energy use, and Abii's whole job is to stop spending that on empty rooms, but the actual savings depend on your house, your climate, your HVAC, and how you live in it. We're measuring it in our beta homes right now and we'll publish what we find, including the methodology. What we <em>can</em> tell you today is that the cold room gets fixed. That's the part we've proven.`,
+        icon: 'tabler:receipt',
+      },
+      {
+        title: "What if it doesn't work in my house?",
+        description: `Then send it back. Returns are no-questions-asked during the beta and we pay return shipping. If a unit fails, we replace it. And if it doesn't work in your house we'd like to know why, that's more valuable to us right now than the sale.`,
+        icon: 'tabler:package-import',
+      },
+    ]}
+  />
+
+  <!-- §11 Final CTA ========================================================== -->
+
+  <CallToAction
+    actions={[{ variant: 'primary', text: 'Join the beta', href: '#signup' }]}
+    classes={{ container: 'max-w-5xl' }}
+  >
+    <Fragment slot="title">
+      There's a room in your house that's always wrong.<br />
+      <span class="text-primary">Let's fix that one first.</span>
+    </Fragment>
+    <Fragment slot="subtitle">
+      Free to join · No card · Beta units shipping {BRAND.shipWindow}
+    </Fragment>
+  </CallToAction>
+</Layout>

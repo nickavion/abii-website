@@ -1,0 +1,17 @@
+---
+/**
+ * A visible marker for an unresolved value from §15 of the copy spec.
+ * Deliberately loud: a placeholder that looks like real copy is how a
+ * `[DOMAIN]` ends up in production.
+ */
+export interface Props {
+  /** Short label, e.g. "DOMAIN" or "MAILING ADDRESS". */
+  label: string;
+  /** The §15 tracking id, surfaced as a tooltip. */
+  open?: string;
+}
+
+const { label, open } = Astro.props;
+---
+
+<span class="tbd-chip" title={open ? `Unresolved: ${open}` : 'Unresolved'}>{label} TBD</span>

@@ -1,0 +1,47 @@
+---
+import { Icon } from 'astro-icon/components';
+
+/**
+ * Stands in for one of the 13 images listed in §14 of the copy spec, none of
+ * which have been shot yet. Labelled with the spec's own asset number, brief
+ * and target dimensions so the shot list is readable straight off the page.
+ *
+ * To replace one: drop the real file in `src/assets/images/` and swap this
+ * component for `<Image>` at the same call site.
+ */
+export interface Props {
+  /** Asset number from the §14 table. */
+  no: number | string;
+  /** The spec's description of the shot. */
+  brief: string;
+  /** Target dimensions, e.g. "~1200px wide". */
+  size?: string;
+  /** CSS aspect ratio, e.g. "16/9" or "4/3". */
+  ratio?: string;
+  /** Alt text the real image should ship with, if the spec gives one. */
+  note?: string;
+  class?: string;
+  icon?: string;
+}
+
+const { no, brief, size, ratio = '16/9', note, class: className = '', icon = 'tabler:photo' } = Astro.props;
+---
+
+<figure
+  class:list={[
+    'relative w-full overflow-hidden rounded-lg border-2 border-dashed border-primary/35 bg-subtle',
+    className,
+  ]}
+  style={`aspect-ratio: ${ratio}`}
+>
+  <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center">
+    <Icon name={icon} class="h-9 w-9 text-primary/60" />
+    <figcaption class="max-w-sm">
+      <span class="block text-xs font-bold uppercase tracking-widest text-primary/80">
+        Asset {no}{size ? ` · ${size}` : ''}
+      </span>
+      <span class="mt-1 block text-sm font-medium text-default/80">{brief}</span>
+      {note && <span class="mt-1 block text-xs text-muted italic">alt: {note}</span>}
+    </figcaption>
+  </div>
+</figure>
