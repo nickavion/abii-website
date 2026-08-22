@@ -13,10 +13,9 @@ import WaitlistForm from '~/components/widgets/WaitlistForm.astro';
 import Image from '~/components/common/Image.astro';
 import { Icon } from 'astro-icon/components';
 
-import appTwoRooms from '~/assets/images/mockups/app-two-rooms.png';
-import roomCardVacant from '~/assets/images/mockups/room-card-vacant.png';
-import twoPhones from '~/assets/images/mockups/two-phones-parent-kid.png';
-import appFullHome from '~/assets/images/mockups/app-full-home.png';
+import appHomeTarget from '~/assets/images/app/app-home-target.png';
+import appRoomVacant from '~/assets/images/app/app-room-vacant.png';
+import appRoomsExternal from '~/assets/images/app/app-rooms-external.png';
 import handsVentSwap from '~/assets/images/mockups/hands-vent-swap.png';
 import step1 from '~/assets/images/mockups/step-1-vent-drop.png';
 import step2 from '~/assets/images/mockups/step-2-phone-pair.png';
@@ -28,6 +27,11 @@ const metadata = {
   title: 'Abii: Smart Vents for Room-by-Room Temperature Control',
   ignoreTitleTemplate: true,
 };
+
+// Video lives in public/ because astro:assets only processes images. Paths are
+// built off BASE_URL so they survive the /abii-website base path on Pages.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const media = (file: string) => `${base}/media/${file}`;
 ---
 
 <Layout metadata={metadata}>
@@ -52,14 +56,29 @@ const metadata = {
     </Fragment>
 
     <Fragment slot="image">
-      <AssetPlaceholder
-        no={3}
-        size="2000px+ wide"
-        ratio="16/9"
-        icon="tabler:player-play"
-        brief="Hero video, two cuts. Cut 1: the Abii vent in use, louvers closing, no more air coming through. Cut 2: a person in the living room in direct sun, uncomfortably hot. She opens the app and presses the down button; the button turns progressively more blue with each press. The window shades crack closed to about 60%, cutting the light. We float up to the vent and see it blowing downward toward her, with blue waves showing the cold air coming from the vent."
-        note="An Abii smart vent register installed in a hardwood floor, with the Abii phone app beside it showing per-room temperatures."
-      />
+      {
+        /*
+        Transcoded from the source HEVC capture: HEVC does not play in Firefox
+        and is unreliable in Chrome, so WebM is offered first with an H.264 MP4
+        fallback. The clip is silent, so muted autoplay is not hiding audio.
+      */
+      }
+      <div class="relative mx-auto overflow-hidden rounded-xl border border-primary/15 shadow-lg">
+        <video
+          id="hero-video"
+          class="block w-full"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster={media('hero-poster.jpg')}
+          aria-label="A person on a sofa in bright sunlight lowers the target temperature in the Abii app; the window shade closes partway and the vent begins cooling the room."
+        >
+          <source src={media('hero.webm')} type="video/webm" />
+          <source src={media('hero.mp4')} type="video/mp4" />
+        </video>
+      </div>
     </Fragment>
   </Hero>
 
@@ -178,13 +197,15 @@ const metadata = {
     content="Set the bedroom to 70 and the living room to 66, and Abii actually delivers both. Each vent opens and closes on its own based on that room's real temperature, not on whatever the hallway thermostat happens to be reading."
   >
     <Fragment slot="image">
-      <Image
-        src={appTwoRooms}
-        alt="App home screen showing two rooms at different temperatures, both sitting at target"
-        width={1200}
-        height={900}
-        class="rounded-lg border border-primary/15"
-      />
+      <div class="mx-auto w-full max-w-[290px]">
+        <Image
+          src={appHomeTarget}
+          alt="The Abii app home screen: average home temperature, the target control, HVAC and system mode, and the first room card"
+          width={1179}
+          height={2406}
+          class="w-full rounded-[2rem] border border-primary/15 shadow-xl"
+        />
+      </div>
     </Fragment>
   </Content>
 
@@ -196,11 +217,11 @@ const metadata = {
   >
     <Fragment slot="image">
       <Image
-        src={roomCardVacant}
-        alt="Room card with a gray vacant dot and the vent icon in the closed state"
-        width={1200}
-        height={900}
-        class="rounded-lg border border-primary/15"
+        src={appRoomVacant}
+        alt="The Bedroom room card in the Abii app, marked Vacant at 72 degrees"
+        width={1070}
+        height={300}
+        class="mx-auto w-full rounded-xl border border-primary/15 shadow-md"
       />
     </Fragment>
   </Content>
@@ -211,12 +232,12 @@ const metadata = {
     content="Give your kid control of their own bedroom and view-only on the rest of the house. They adjust their room from their phone; you can see every change and override anything, instantly. No more thermostat arguments in the hallway."
   >
     <Fragment slot="image">
-      <Image
-        src={twoPhones}
-        alt="Two phones side by side, parent full view and kid single-room view"
-        width={1200}
-        height={900}
-        class="rounded-lg border border-primary/15"
+      <AssetPlaceholder
+        no={6}
+        size="~1200px"
+        ratio="4/3"
+        icon="tabler:users"
+        brief="Two phones side by side, parent full view and kid single-room view. No screenshot of this exists yet; the shipped app screens do not show per-member access."
       />
     </Fragment>
   </Content>
@@ -244,13 +265,15 @@ const metadata = {
     content="Live temperature, humidity, CO2 sensors and occupancy for every room, in one screen. Take control of your home and save on heating and cooling."
   >
     <Fragment slot="image">
-      <Image
-        src={appFullHome}
-        alt="Full app home screen, room list plus the external conditions card"
-        width={1200}
-        height={900}
-        class="rounded-lg border border-primary/15"
-      />
+      <div class="mx-auto w-full max-w-[290px]">
+        <Image
+          src={appRoomsExternal}
+          alt="The Abii app room list showing Living Room, Bedroom and Kitchen at different temperatures with occupancy, above the external conditions card"
+          width={1179}
+          height={2406}
+          class="w-full rounded-[2rem] border border-primary/15 shadow-xl"
+        />
+      </div>
     </Fragment>
   </Content>
 
@@ -415,3 +438,34 @@ const metadata = {
     </Fragment>
   </CallToAction>
 </Layout>
+
+<script>
+  // Autoplaying motion is opt-out for anyone who has asked their OS for less of
+  // it. Pause the hero clip and hand them controls instead of removing it.
+  const respectReducedMotion = () => {
+    const video = document.getElementById('hero-video') as HTMLVideoElement | null;
+    if (!video) return;
+
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const apply = () => {
+      if (query.matches) {
+        video.pause();
+        video.removeAttribute('autoplay');
+        video.controls = true;
+      } else {
+        video.controls = false;
+        void video.play().catch(() => {
+          // Some browsers still refuse muted autoplay; surface controls rather
+          // than leaving a frozen poster with no way to start it.
+          video.controls = true;
+        });
+      }
+    };
+
+    apply();
+    query.addEventListener('change', apply);
+  };
+
+  respectReducedMotion();
+  document.addEventListener('astro:page-load', respectReducedMotion);
+</script>
