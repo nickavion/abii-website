@@ -36,7 +36,7 @@ Abii controls airflow to individual rooms in a central forced-air HVAC system. R
 
 ## 5. Installation
 
-Abii vents are designed to replace a standard residential vent cover with no tools beyond what a filter change requires. You are responsible for installing them correctly and for confirming they fit your openings. Do not modify Abii hardware, and do not install it in any opening it was not designed for.
+Abii hardware is designed either to attach to a standard residential wall vent using magnets and the vent's existing screw hole, or to replace a standard residential vent cover, with no tools beyond what a filter change requires. You are responsible for installing it correctly and confirming it fits your vents. Do not modify Abii hardware, and do not install it on any vent or opening it was not designed for.
 
 ## 6. Waitlist
 

@@ -16,7 +16,8 @@ import { Icon } from 'astro-icon/components';
 import appHomeTarget from '~/assets/images/app/app-home-target.png';
 import appRoomVacant from '~/assets/images/app/app-room-vacant.png';
 import appRoomsExternal from '~/assets/images/app/app-rooms-external.png';
-import handsVentSwap from '~/assets/images/mockups/hands-vent-swap.png';
+import actuatorOnVent from '~/assets/images/mockups/actuator-on-vent.png';
+import actuatorCloseup from '~/assets/images/mockups/actuator-closeup.png';
 import step1 from '~/assets/images/mockups/step-1-vent-drop.png';
 import step2 from '~/assets/images/mockups/step-2-phone-pair.png';
 import step3 from '~/assets/images/mockups/step-3-thermostat-check.png';
@@ -43,7 +44,7 @@ const media = (file: string) => `${base}/media/${file}`;
     </Fragment>
 
     <Fragment slot="subtitle">
-      Abii replaces your vent covers with smart ones. Our patent pending algorithm helps regulate your home in
+      Abii attaches to the vents or replaces your existing ones. Our patent pending algorithm helps regulate your home in
       combination with our vents to give you your desired temperature. No more sweaty bedroom nights. No more freezing
       rooms. No more paying to condition rooms nobody's in. No expensive ductwork or extra HVAC unit. No new HVAC
       system. No contractors.
@@ -141,9 +142,9 @@ const media = (file: string) => `${base}/media/${file}`;
     isReversed
     items={[
       {
-        title: 'Swap your vent covers',
+        title: 'Attach it to your vent or install one of our new ones',
         description:
-          'Pop out the old register, drop in an Abii vent. Standard residential sizes, no drilling, no wiring, no ductwork touched. If you can change an air filter, you can do this.',
+          "Clip Abii onto your existing vent with magnets and one screw into the hole that's already there, or pop out the old register and drop in an Abii vent. No drilling, no wiring, no ductwork touched. If you can change an air filter, you can do this.",
         icon: 'tabler:arrow-big-down-lines',
       },
       {
@@ -228,16 +229,16 @@ const media = (file: string) => `${base}/media/${file}`;
 
   <Content
     isAfterContent
-    title="Everyone in the house gets a say, but you keep the keys"
-    content="Give your kid control of their own bedroom and view-only on the rest of the house. They adjust their room from their phone; you can see every change and override anything, instantly. No more thermostat arguments in the hallway."
+    title="It fits the house you already have"
+    content="Abii works with your existing central HVAC: furnace, heat pump, AC, whatever's down there. No new equipment, no dampers cut into the ductwork, no permit, no $3,000+ zoning retrofit quote."
   >
     <Fragment slot="image">
-      <AssetPlaceholder
-        no={6}
-        size="~1200px"
-        ratio="4/3"
-        icon="tabler:users"
-        brief="Two phones side by side, parent full view and kid single-room view. No screenshot of this exists yet; the shipped app screens do not show per-member access."
+      <Image
+        src={actuatorOnVent}
+        alt="Concept drawing of the Abii unit mounted on the top border of an existing wall vent, with the louvers left clear"
+        width={1160}
+        height={790}
+        class="rounded-lg border border-primary/15"
       />
     </Fragment>
   </Content>
@@ -245,22 +246,6 @@ const media = (file: string) => `${base}/media/${file}`;
   <Content
     isAfterContent
     isReversed
-    title="It fits the house you already have"
-    content="Abii works with your existing central HVAC: furnace, heat pump, AC, whatever's down there. No new equipment, no dampers cut into the ductwork, no permit, no $3,000+ zoning retrofit quote."
-  >
-    <Fragment slot="image">
-      <AssetPlaceholder
-        no={7}
-        size="~1200px"
-        ratio="4/3"
-        icon="tabler:camera"
-        brief="An Abii vent installed in a real room. Photo, not render."
-      />
-    </Fragment>
-  </Content>
-
-  <Content
-    isAfterContent
     title="You can see what's happening"
     content="Live temperature, humidity, CO2 sensors and occupancy for every room, in one screen. Take control of your home and save on heating and cooling."
   >
@@ -279,16 +264,15 @@ const media = (file: string) => `${base}/media/${file}`;
 
   <Content
     isAfterContent
-    isReversed
     title="Renter-friendly"
-    content="The whole install is a vent cover swap. Take them out when you move, put the old ones back, and take Abii to the next place. No landlord conversation required."
+    content="Either way, nothing gets cut or wired. The attachment holds on with magnets and the vent's own screw hole, and Abii vents drop into the existing opening. Take them out when you move, put your old setup back, and bring Abii to the next place. No landlord conversation required."
   >
     <Fragment slot="image">
       <Image
-        src={handsVentSwap}
-        alt="Illustration of a vent cover being swapped for an Abii vent"
-        width={1200}
-        height={900}
+        src={actuatorCloseup}
+        alt="Close-up concept drawing of the Abii unit resting on a vent's top border, showing its slider, mounting screw, button and status light"
+        width={1080}
+        height={520}
         class="rounded-lg border border-primary/15"
       />
     </Fragment>
@@ -347,8 +331,8 @@ const media = (file: string) => `${base}/media/${file}`;
         answer if you rent.
       </p>
       <p class="mb-4">
-        So I started building the version that should exist: a vent register that swaps in like a normal vent cover, has
-        a sensor and a motor inside it, and decides for itself when to open. I got the first one working on a bench, an
+        So I started building the version that should exist: something that works with the vents you already have,
+        either attaching to them or swapping in like a normal vent cover, and decides for itself when to open. I got the first one working on a bench, an
         ESP32, a temperature sensor, and a motor. Then the app to run them. Then the logic that decides which rooms get
         air.
       </p>
@@ -402,7 +386,7 @@ const media = (file: string) => `${base}/media/${file}`;
       },
       {
         title: 'Do I need an electrician, or to touch my ductwork?',
-        description: `No and no. You take out your existing vent cover and drop Abii in its place. Nothing gets cut, drilled, wired, or permitted. Traditional zoned HVAC, dampers installed inside your ducts by a contractor, is the alternative, and it typically runs into the thousands.`,
+        description: `No and no. Either attach Abii to your existing vent with magnets and one screw into the hole that's already there, or take out the old vent cover and drop an Abii vent in its place. Nothing gets cut, drilled, wired, or permitted. Traditional zoned HVAC, dampers installed inside your ducts by a contractor, is the alternative, and it typically runs into the thousands.`,
         icon: 'tabler:plug-off',
       },
       {
