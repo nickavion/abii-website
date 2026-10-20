@@ -8,7 +8,6 @@ import FAQs from '~/components/widgets/FAQs.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
-import AssetPlaceholder from '~/components/common/AssetPlaceholder.astro';
 import WaitlistForm from '~/components/widgets/WaitlistForm.astro';
 import Image from '~/components/common/Image.astro';
 import { Icon } from 'astro-icon/components';
@@ -18,6 +17,7 @@ import appRoomVacant from '~/assets/images/app/app-room-vacant.png';
 import appRoomsExternal from '~/assets/images/app/app-rooms-external.png';
 import actuatorOnVent from '~/assets/images/mockups/actuator-on-vent.png';
 import actuatorCloseup from '~/assets/images/mockups/actuator-closeup.png';
+import founderHeadshot from '~/assets/images/founder-nikkie-castillo.jpg';
 import step1 from '~/assets/images/mockups/step-1-vent-drop.png';
 import step2 from '~/assets/images/mockups/step-2-phone-pair.png';
 import step3 from '~/assets/images/mockups/step-3-thermostat-check.png';
@@ -44,7 +44,7 @@ const media = (file: string) => `${base}/media/${file}`;
     </Fragment>
 
     <Fragment slot="subtitle">
-      Abii attaches to the vents or replaces your existing ones. Our patent pending algorithm helps regulate your home in
+      Abii attaches to the vents or replaces your existing ones. Our algorithm helps regulate your home in
       combination with our vents to give you your desired temperature. No more sweaty bedroom nights. No more freezing
       rooms. No more paying to condition rooms nobody's in. No expensive ductwork or extra HVAC unit. No new HVAC
       system. No contractors.
@@ -90,9 +90,9 @@ const media = (file: string) => `${base}/media/${file}`;
       <ul class="flex flex-col items-center justify-center gap-3 text-center text-sm font-medium sm:flex-row sm:gap-8">
         {
           [
-            'Built and tested in real homes',
+            'Prototype running in a real home',
             'Fits standard residential vent openings',
-            'Works with the HVAC system you already have',
+            'Works with your existing variable-speed (ECM) HVAC',
           ].map((claim) => (
             <li class="flex items-center gap-2">
               <Icon name="tabler:circle-check" class="h-5 w-5 shrink-0 text-primary" />
@@ -176,7 +176,7 @@ const media = (file: string) => `${base}/media/${file}`;
     <p class="text-sm font-bold uppercase tracking-widest text-primary">Eco Mode</p>
     <h2 class="mt-2 font-heading text-3xl font-bold tracking-tight md:text-4xl">Abii learns your habits</h2>
     <p class="mt-4 text-lg text-muted">
-      Our patent-pending algorithm helps determine the best way to save energy without sacrificing comfort. Abii learns
+      Our algorithm helps determine the best way to save energy without sacrificing comfort. Abii learns
       your habits and reduces the waste of heating and cooling unused rooms, heating and cooling rooms while you're
       away, and heating and cooling rooms while you're asleep. Wake up and fall asleep to your ideal temperature and get
       a good night's sleep.
@@ -230,7 +230,7 @@ const media = (file: string) => `${base}/media/${file}`;
   <Content
     isAfterContent
     title="It fits the house you already have"
-    content="Abii works with your existing central HVAC: furnace, heat pump, AC, whatever's down there. No new equipment, no dampers cut into the ductwork, no permit, no $3,000+ zoning retrofit quote."
+    content="Abii works with your existing central HVAC, as long as it has a variable-speed (ECM) blower. That's what this first version supports. No new equipment, no dampers cut into the ductwork, no permit, no $3,000+ zoning retrofit quote."
   >
     <Fragment slot="image">
       <Image
@@ -337,21 +337,20 @@ const media = (file: string) => `${base}/media/${file}`;
         air.
       </p>
       <p class="mb-4">
-        It's not finished. It's in a small number of real homes right now and I'd rather have a handful of people using
-        it and telling me what's broken than a hundred thousand people on a waitlist for something perfect. If your
-        house has a room that's always wrong, I'd like you to be one of them.
+        It's not finished. It's running in my own home right now, and I'm building more units so it can go into more.
+        I'd rather have a handful of people using it and telling me what's broken than a hundred thousand people on a
+        waitlist for something perfect. If your house has a room that's always wrong, I'd like you to be one of them.
       </p>
       <p class="font-semibold">{BRAND.founderName}, founder, Abii</p>
     </Fragment>
 
     <Fragment slot="image">
-      <AssetPlaceholder
-        no={11}
-        size="400×400"
-        ratio="1/1"
-        icon="tabler:user-circle"
-        brief="Founder headshot, plain background."
-        class="mx-auto max-w-xs"
+      <Image
+        src={founderHeadshot}
+        alt={`${BRAND.founderName}, founder of Abii`}
+        width={800}
+        height={800}
+        class="mx-auto w-full max-w-xs rounded-lg border border-primary/15"
       />
     </Fragment>
   </Content>

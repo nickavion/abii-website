@@ -126,9 +126,7 @@ const press = contactEmail('press');
         <p>
           © 2026 {BRAND.legalEntity ?? <Tbd label="legal entity" open="OPEN-11" />}. All rights reserved.
         </p>
-        <p class="text-muted">
-          {BRAND.mailingAddress ?? <Tbd label="mailing address" open="OPEN-11" />}
-        </p>
+        {BRAND.mailingAddress && <p class="text-muted">{BRAND.mailingAddress}</p>}
       </div>
     </div>
   </div>

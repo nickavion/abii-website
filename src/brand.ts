@@ -7,7 +7,7 @@
  */
 export const BRAND = {
   /** OPEN-11 — resolved. */
-  founderName: 'Nico Castillo',
+  founderName: 'Nikkie Castillo',
 
   /** OPEN-9 — used in the hero microcopy, the final CTA and the beta disclosure. */
   shipWindow: 'Winter 2026',
