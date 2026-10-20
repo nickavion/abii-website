@@ -91,7 +91,10 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
 
           if (hasIntegration && sitemapExists) {
             const robotsTxt = fs.readFileSync(robotsTxtFile, { encoding: 'utf8', flag: 'a+' });
-            const sitemapUrl = new URL(sitemapName, String(new URL(cfg.base, cfg.site)));
+            // The base needs a trailing slash, or URL resolution drops its last
+            // segment (`/abii-website` → `/sitemap-index.xml` at the domain root).
+            const baseUrl = String(new URL(cfg.base, cfg.site)).replace(/\/?$/, '/');
+            const sitemapUrl = new URL(sitemapName, baseUrl);
             const pattern = /^Sitemap:(.*)$/m;
 
             if (!pattern.test(robotsTxt)) {
