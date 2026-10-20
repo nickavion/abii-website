@@ -31,9 +31,10 @@ jobs:
         with:
           node-version: 22
         env:
-          # The waitlist form stays disabled until this is set as a repository
-          # variable (Settings > Secrets and variables > Actions > Variables).
-          PUBLIC_KIT_FORM_ID: ${{ vars.PUBLIC_KIT_FORM_ID }}
+          # Kit form id for the waitlist ("Website waitlist" form in Kit). It is
+          # public — it appears in the page's HTML — so it lives here. A
+          # repository variable of the same name overrides it.
+          PUBLIC_KIT_FORM_ID: ${{ vars.PUBLIC_KIT_FORM_ID || '10070762' }}
 
   deploy:
     needs: build
